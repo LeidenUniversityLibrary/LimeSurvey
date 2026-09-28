@@ -10,6 +10,8 @@
 ## such as various IDE folders .idea .netbeans .vscode
 ## or development environment things like .vagrant etc
 .*
+!/.env.example
+!/.dockerignore
 !.htaccess
 !.scrutinizer.yml
 !.bowerrc
@@ -270,7 +272,6 @@ tags
 package-lock.json
 
 # Docker related files
-.dockerignore
 .Dockerfile
 docker-compose.yml
 docker/

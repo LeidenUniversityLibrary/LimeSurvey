@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Containerfile
+    ports:
+      - "127.0.0.1:${LIMESURVEY_PORT:-8080}:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - config:/var/lib/limesurvey/config
+      - uploads:/var/www/html/upload
+      - temporary:/var/www/html/tmp
+
+  db:
+    image: docker.io/library/mariadb:11.4
+    environment:
+      MARIADB_DATABASE: limesurvey
+      MARIADB_USER: limesurvey
+      MARIADB_PASSWORD: ${LIMESURVEY_DB_PASSWORD:?Set LIMESURVEY_DB_PASSWORD in .env}
+      MARIADB_ROOT_PASSWORD: ${LIMESURVEY_DB_ROOT_PASSWORD:?Set LIMESURVEY_DB_ROOT_PASSWORD in .env}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    volumes:
+      - database:/var/lib/mysql
+
+volumes:
+  config:
+  uploads:
+  temporary:
+  database:

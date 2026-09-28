@@ -51,6 +51,31 @@ LimeSurvey is perfect for you if you are...
 
 ⚠️ **Repository**:  You can also access the development repository. Be aware that it may contain versions that are not fully tested.
 
+### Run locally with Podman
+
+This setup runs the repository checkout with Apache, PHP and MariaDB. You need Podman and a Compose provider available to `podman compose`.
+
+1. Copy `.env.example` to `.env` and replace both example passwords with distinct, strong values. Keep `.env` private.
+2. Start the containers from the repository root.
+
+   **Command safety**: State-changing
+
+   ```sh
+   podman compose up --build -d
+   ```
+
+3. Open `http://localhost:8080` (or the port set by `LIMESURVEY_PORT`) and complete the LimeSurvey installer. Use `db` as the database host, `3306` as the port, `limesurvey` as the database name and username, and your `LIMESURVEY_DB_PASSWORD` value as the database password.
+
+The named volumes retain the database, generated configuration, uploads and temporary files across container restarts. To stop the containers while retaining the volumes:
+
+**Command safety**: State-changing
+
+```sh
+podman compose down
+```
+
+The web port binds to localhost only. This configuration is intended for local use; a public deployment also needs HTTPS, a suitable secret-management process and a backup plan for the database and persistent volumes.
+
 ## Requirements
 
 ### Minimal

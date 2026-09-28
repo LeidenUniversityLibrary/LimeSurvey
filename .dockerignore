@@ -1,0 +1,13 @@
+.git
+.idea
+.env
+.env.*
+!.env.example
+application/config/config.php
+application/config/config.*.php
+application/config/security.php
+application/config/allowed_hosts.php
+tmp/runtime/*
+tmp/assets/*
+tmp/upload/*
+tests
