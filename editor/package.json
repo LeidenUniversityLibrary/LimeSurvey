@@ -84,6 +84,7 @@
     "build-https": "HTTPS=true rsbuild build",
     "build-demo": "PUBLIC_URL=/ REACT_APP_DEV_MODE= REACT_APP_DEMO_MODE=true rsbuild build",
     "postbuild": "node scripts/postbuild.js",
+    "check-build-assets": "node scripts/check-built-assets.cjs",
     "test": "REACT_APP_DEMO_MODE=true jest --ci",
     "storybook": "REACT_APP_DEV_MODE=true STORYBOOK_DEV=true storybook dev -p 6006",
     "storybook:win": "set STORYBOOK_DEV=true && storybook dev -p 6006",

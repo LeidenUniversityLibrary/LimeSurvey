@@ -66,6 +66,12 @@ This setup runs the repository checkout with Apache, PHP and MariaDB. You need P
 
 3. Open `http://localhost:8080` (or the port set by `LIMESURVEY_PORT`) and complete the LimeSurvey installer. Use `db` as the database host, `3306` as the port, `limesurvey` as the database name and username, and your `LIMESURVEY_DB_PASSWORD` value as the database password.
 
+The container health check uses `http://localhost:8080/health.php` (adjust the port if you changed `LIMESURVEY_PORT`). A `200 OK` response with `OK` in the body confirms that Apache serves PHP. It does not check the database or survey workflows.
+
+### Test emails locally
+
+Mailpit captures email sent by the local Compose stack. In LimeSurvey's Global settings → Email settings, select **SMTP**, set the SMTP host to `mailpit:1025`, and leave the SMTP username, password and encryption unset. Save the settings, then use **Send test email**. Open `http://localhost:8025` (or the port set by `MAILPIT_PORT`) to inspect the message. Mailpit does not deliver captured messages to their recipients.
+
 The named volumes retain the database, generated configuration, uploads and temporary files across container restarts. To stop the containers while retaining the volumes:
 
 **Command safety**: State-changing
@@ -75,6 +81,8 @@ podman compose down
 ```
 
 The web port binds to localhost only. This configuration is intended for local use; a public deployment also needs HTTPS, a suitable secret-management process and a backup plan for the database and persistent volumes.
+
+For a Linux server with systemd, use the [Podman Quadlet units](deploy/quadlet/README.md). They support a containerised MySQL database for the PoC and a MySQL service on the host for production.
 
 ## Requirements
 

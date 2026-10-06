@@ -8,6 +8,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "php", "-r", 'exit(@file_get_contents("http://127.0.0.1/health.php") === "OK\n" ? 0 : 1);']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     volumes:
       - config:/var/lib/limesurvey/config
       - uploads:/var/www/html/upload
@@ -27,6 +33,11 @@ services:
       retries: 12
     volumes:
       - database:/var/lib/mysql
+
+  mailpit:
+    image: docker.io/axllent/mailpit:v1.31.4
+    ports:
+      - "127.0.0.1:${MAILPIT_PORT:-8025}:8025"
 
 volumes:
   config:

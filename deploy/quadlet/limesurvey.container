@@ -1,0 +1,17 @@
+[Unit]
+Description=LimeSurvey web application
+
+[Container]
+Image=localhost/limesurvey:quadlet
+Pull=never
+Network=limesurvey.network
+PublishPort=127.0.0.1:8080:80
+Volume=limesurvey-config:/var/lib/limesurvey/config
+Volume=limesurvey-uploads:/var/www/html/upload
+Volume=limesurvey-temporary:/var/www/html/tmp
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
