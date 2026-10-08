@@ -1,8 +1,10 @@
 .git
 .idea
+.github
 .env
 .env.*
 !.env.example
+node_modules
 application/config/config.php
 application/config/config.*.php
 application/config/security.php
