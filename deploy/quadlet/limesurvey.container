@@ -2,8 +2,8 @@
 Description=LimeSurvey web application
 
 [Container]
-Image=localhost/limesurvey:quadlet
-Pull=never
+Image=ghcr.io/leidenuniversitylibrary/limesurvey:v7.3.0
+Pull=always
 Network=limesurvey.network
 PublishPort=127.0.0.1:8080:80
 Volume=limesurvey-config:/var/lib/limesurvey/config
@@ -12,6 +12,7 @@ Volume=limesurvey-temporary:/var/www/html/tmp
 
 [Service]
 Restart=always
+TimeoutStartSec=900
 
 [Install]
 WantedBy=default.target
