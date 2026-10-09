@@ -2,7 +2,7 @@
 Description=LimeSurvey web application
 
 [Container]
-Image=ghcr.io/leidenuniversitylibrary/limesurvey:v7.3.0
+Image=ghcr.io/leidenuniversitylibrary/limesurvey:staging
 Pull=always
 Network=limesurvey.network
 PublishPort=8084:80
