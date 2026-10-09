@@ -64,9 +64,9 @@ This setup runs the repository checkout with Apache, PHP and MariaDB. You need P
    podman compose up --build -d
    ```
 
-3. Open `http://localhost:8080` (or the port set by `LIMESURVEY_PORT`) and complete the LimeSurvey installer. Use `db` as the database host, `3306` as the port, `limesurvey` as the database name and username, and your `LIMESURVEY_DB_PASSWORD` value as the database password.
+3. Open `http://localhost:8084` (or the port set by `LIMESURVEY_PORT`) and complete the LimeSurvey installer. Use `db` as the database host, `3306` as the port, `limesurvey` as the database name and username, and your `LIMESURVEY_DB_PASSWORD` value as the database password. For a database client running on your computer, connect to `127.0.0.1:3307` (or the port set by `LIMESURVEY_DB_PORT`).
 
-The container health check uses `http://localhost:8080/health.php` (adjust the port if you changed `LIMESURVEY_PORT`). A `200 OK` response with `OK` in the body confirms that Apache serves PHP. It does not check the database or survey workflows.
+The container health check uses `http://localhost:8084/health.php` (adjust the port if you changed `LIMESURVEY_PORT`). A `200 OK` response with `OK` in the body confirms that Apache serves PHP. It does not check the database or survey workflows.
 
 ### Test emails locally
 
@@ -80,7 +80,7 @@ The named volumes retain the database, generated configuration, uploads and temp
 podman compose down
 ```
 
-The web port binds to localhost only. This configuration is intended for local use; a public deployment also needs HTTPS, a suitable secret-management process and a backup plan for the database and persistent volumes.
+The web and database ports bind to localhost only. This configuration is intended for local use; a public deployment also needs HTTPS, a suitable secret-management process and a backup plan for the database and persistent volumes.
 
 For a Linux server with systemd, use the [Podman Quadlet units](deploy/quadlet/README.md). They support a containerised MySQL database for the PoC and a MySQL service on the host for production.
 

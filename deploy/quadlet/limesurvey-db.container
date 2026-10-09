@@ -5,6 +5,7 @@ Description=LimeSurvey proof-of-concept MySQL database
 Image=docker.io/library/mysql:8.4
 Network=limesurvey.network
 NetworkAlias=db
+PublishPort=3307:3306
 Environment=MYSQL_DATABASE=limesurvey
 Environment=MYSQL_USER=limesurvey
 Environment=MYSQL_PASSWORD_FILE=/run/secrets/limesurvey-db-password

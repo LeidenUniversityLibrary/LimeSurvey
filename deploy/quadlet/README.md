@@ -4,7 +4,7 @@ These units run the image published to GHCR on a Linux server with Podman, syste
 
 The branch workflow in `publish-container.yml` still builds and invokes AWX for `staging` and `master`. A branch deployment does not change the version pinned in this Quadlet. Unconfirmed: the shared branch build workflow's exact tag mapping; check its tags after the first successful run.
 
-The web container listens on `127.0.0.1:8080`; put an HTTPS reverse proxy in front of it. The generated LimeSurvey config, uploads, and temporary files use persistent Podman volumes. The optional PoC MySQL unit stores its data in a fourth volume and publishes no database port.
+The web container listens on `127.0.0.1:8084`; put an HTTPS reverse proxy in front of it. The generated LimeSurvey config, uploads, and temporary files use persistent Podman volumes. The optional PoC MySQL unit stores its data in a fourth volume and publishes port `3307` on localhost for local database clients. Production uses a separately managed MySQL server and does not install this unit.
 
 Use a dedicated service account. Run the commands below as that account from the repository root. Arrange for the account's user manager to start at boot (for example, with systemd lingering) if the service must run without a login session. Confirm the host's Podman version supports the Quadlet keys used here.
 
@@ -29,7 +29,7 @@ Copy `limesurvey.container` and `limesurvey.network` to `~/.config/containers/sy
 
 **Command safety**: State-changing, Production-only
 **Impact**: Installs or replaces the service account's Quadlet definitions.
-**Prerequisites**: Review local changes to the unit files and confirm port `8080` is available.
+**Prerequisites**: Review local changes to the unit files and confirm port `8084` is available. For the PoC database unit, also confirm port `3307` is available.
 **Authorisation**: The deployment operator.
 **Stop and escalate when**: Another service already owns the port or the units differ from the approved revision.
 **Rollback**: Restore the previous unit files and reload the user manager.
@@ -78,7 +78,7 @@ systemctl --user start limesurvey.service
 systemctl --user status limesurvey-db.service limesurvey.service
 ```
 
-In the LimeSurvey installer, enter database host `db`, port `3306`, database `limesurvey`, user `limesurvey`, and the application password stored in `limesurvey-db-password`.
+In the LimeSurvey installer, enter database host `db`, port `3306`, database `limesurvey`, user `limesurvey`, and the application password stored in `limesurvey-db-password`. For a database client on the server, connect to `127.0.0.1:3307`.
 
 ## Production: MySQL on the server
 
